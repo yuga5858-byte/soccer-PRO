@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local JSON data store (fallback DB when Supabase is not configured)
+/data/store.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
