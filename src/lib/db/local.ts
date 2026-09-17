@@ -4,7 +4,11 @@ import path from "node:path";
 import type { Database } from "@/lib/types";
 import { buildSeedDatabase } from "@/lib/seed";
 
-const DATA_DIR = path.join(process.cwd(), "data");
+// Serverless platforms (Vercel, AWS Lambda, ...) ship a read-only filesystem except /tmp.
+// process.cwd() is only writable in local dev, so fall back to /tmp when it isn't.
+const DATA_DIR = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME
+  ? "/tmp/anra-yuga-os-data"
+  : path.join(process.cwd(), "data");
 const DATA_FILE = path.join(DATA_DIR, "store.json");
 
 let memoryCache: Database | null = null;
